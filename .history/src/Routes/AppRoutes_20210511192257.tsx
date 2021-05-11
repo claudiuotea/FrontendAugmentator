@@ -1,0 +1,41 @@
+import React from "react";
+import { Suspense } from "react";
+import { Login } from "../Components/Login";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { Register } from "../Components/Register";
+import { ForgotPassword } from "../Components/ForgotPassword";
+import { ResetPassword } from "../Components/ResetPassword";
+import { VerifyAccount } from "../Components/VerifyAccount";
+import { NavbarNotLogged } from "../Components/NavbarNotLoggedIn";
+
+export const AppRoutes: React.FunctionComponent<{}> = () => {
+  return (
+    <Router>
+      <NavbarNotLogged/>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Switch>
+          <Route path="/account">
+            <div>
+              da
+            </div>
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/register">
+            <Register />
+          </Route>
+          <Route path="/forgotpass">
+             <ForgotPassword/>
+          </Route>
+          <Route path="/resetpass">
+             <ResetPassword/>
+          </Route>
+          <Route path="/verifyaccount">
+             <VerifyAccount/>
+          </Route>
+        </Switch>
+      </Suspense>
+    </Router>
+  );
+};
