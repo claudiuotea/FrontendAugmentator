@@ -25,6 +25,8 @@ export const VerifyAccount: React.FunctionComponent<any> = () => {
          })
    },[]);
      
+  
+
   return (
     <Redirect to="/account/login"></Redirect>
   );

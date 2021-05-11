@@ -1,4 +1,4 @@
-import { Button, Grid, makeStyles, TextField, LinearProgress } from "@material-ui/core";
+import { Button, Grid, makeStyles, TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import { RegisterInterface } from "../Models/Interfaces";
 import AccountService from "../Services/AccountService";

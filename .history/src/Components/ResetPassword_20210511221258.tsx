@@ -1,7 +1,9 @@
-import { Button, Grid, makeStyles, TextField, LinearProgress } from "@material-ui/core";
+import { Button, Grid, makeStyles, TextField } from "@material-ui/core";
 import React, { useState } from "react";
-import { RegisterInterface } from "../Models/Interfaces";
 import AccountService from "../Services/AccountService";
+import { useLocation } from "react-router-dom";
+import queryString from "query-string";
+import { ResetPasswordInterface } from "../Models/Interfaces";
 
 //Creez un obiect CSS
 const useStyles = makeStyles((theme) => ({
@@ -18,25 +20,28 @@ const useStyles = makeStyles((theme) => ({
     verticalAlign: "middle",
     marginTop: "35%",
   },
-
   linearProgress: {
     marginTop:15,
     marginBottom:15
 },
 }));
 
-export const Register: React.FunctionComponent<any> = () => {
-  //instantiez obiectul
+export const ResetPassword: React.FunctionComponent<any> = () => {
+  //instantiez obiectul de css
   const classes = useStyles();
-  const [username, setUsername] = useState("");
+  //field-urile pt parola noua
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [email, setEmail] = useState("");
+  //query string-ul din care iau datele (token-ul pt reset si public_id-ul lui)
+  const { search } = useLocation();
+  //parsez query string-ul ca sa obtin datele
+  const { id, token } = queryString.parse(search);
   //pentru loading bar
  const [isFeedbackLoading, setIsFeedbackLoading] = React.useState(false);
 
- //verifica daca trebuie afisat loading bar
- const LinearFeedback = () => {
+
+  //verifica daca trebuie afisat loading bar
+const LinearFeedback = () => {
   if (isFeedbackLoading) {
       return (
           <div className={classes.linearProgress}>
@@ -48,13 +53,16 @@ export const Register: React.FunctionComponent<any> = () => {
 
   const onSubmit = async (event: any) => {
     if (password === confirmPassword) {
-      const data: RegisterInterface = {
-        username: username,
+      //verificam daca parolele sunt identice si salvam datele pentru a le trimite la server
+      const data: ResetPasswordInterface = {
+        confirmPassword: confirmPassword,
         password: password,
-        email: email,
+        token: Array.isArray(token) ? token[0] : token!,
+        public_id: Array.isArray(id) ? id[0] : id!,
       };
+
       //trimite request la server
-      AccountService.register(data)
+      AccountService.resetPassword(data)
         .then((resp) => {
           console.log(resp);
         })
@@ -70,33 +78,6 @@ export const Register: React.FunctionComponent<any> = () => {
     //impart ecranul in 2 coloane
     <div className={classes.root + classes.gridItem}>
       <div className={classes.form}>
-        <TextField
-          variant="outlined"
-          margin="normal"
-          fullWidth
-          required
-          label="Email"
-          name="email"
-          value={email}
-          autoFocus
-          type="email"
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-        />
-        <TextField
-          variant="outlined"
-          margin="normal"
-          fullWidth
-          required
-          label="Username"
-          name="username"
-          value={username}
-          autoFocus
-          onChange={(e) => {
-            setUsername(e.target.value);
-          }}
-        />
         <TextField
           variant="outlined"
           margin="normal"
@@ -133,7 +114,7 @@ export const Register: React.FunctionComponent<any> = () => {
           color="primary"
           onClick={onSubmit}
         >
-          Sign up
+          Reset
         </Button>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { Button, Grid, makeStyles, TextField,LinearProgress } from "@material-ui/core";
+import { Button, Grid, makeStyles, TextField, CircularProgress, LinearProgress } from "@material-ui/core";
 import React, { useState } from "react";
 import { LoginInterface } from "../Models/Interfaces";
 import AccountService from "../Services/AccountService";
@@ -6,7 +6,10 @@ import AccountService from "../Services/AccountService";
 //Creez un obiect CSS
 const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1,
+    display: 'flex',
+    '& > * + *': {
+        marginTop: theme.spacing(5),
+    },
   },
   //100% inaltimea paginii
   gridItem: {
@@ -18,9 +21,8 @@ const useStyles = makeStyles((theme) => ({
      verticalAlign:"middle",
      marginTop:"35%"
   },
-  linearProgress: {
-    marginTop:15,
-    marginBottom:15
+  circularProgress: {
+    
 },
 }));
 
@@ -33,10 +35,10 @@ export const Login: React.FunctionComponent<any> = () => {
  const [isFeedbackLoading, setIsFeedbackLoading] = React.useState(false);
   
  //verifica daca trebuie afisat loading bar
- const LinearFeedback = () => {
+ const circularFeedback = () => {
     if (isFeedbackLoading) {
         return (
-            <div className={classes.linearProgress}>
+            <div >
                 <LinearProgress/>
             </div>
         );
@@ -53,8 +55,6 @@ export const Login: React.FunctionComponent<any> = () => {
      //trimite request la server
      AccountService.login(data)
          .then(resp => {
-          //salvez jwt-u primit in local storage
-           window.localStorage.setItem("token",JSON.stringify(resp.data.token))
             console.log(resp)
          })
          .catch(err => {
@@ -100,7 +100,7 @@ export const Login: React.FunctionComponent<any> = () => {
             <div style={{"textAlign":"center","margin":"3px"}} >
               <a href="/account/forgotpass">Forgot password? Click here!</a>
             </div>
-            {LinearFeedback()}
+            {circularFeedback()}
             <Button fullWidth type="submit" variant="contained" color="primary"  onClick={onSubmit}>
                Sign in
             </Button>

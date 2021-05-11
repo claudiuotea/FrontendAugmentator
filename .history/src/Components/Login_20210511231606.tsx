@@ -53,8 +53,10 @@ export const Login: React.FunctionComponent<any> = () => {
      //trimite request la server
      AccountService.login(data)
          .then(resp => {
+            console.log(resp.data.token) 
           //salvez jwt-u primit in local storage
            window.localStorage.setItem("token",JSON.stringify(resp.data.token))
+
             console.log(resp)
          })
          .catch(err => {

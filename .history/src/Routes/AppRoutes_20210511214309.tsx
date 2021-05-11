@@ -18,9 +18,24 @@ export const AppRoutes: React.FunctionComponent<{}> = () => {
           <Route exact path="/">
             <Redirect push to={"/account/login"}/>
           </Route>
-          <Route path="/account">
+          <Route exact path="/account">
             <Account/>
           </Route>
+          {/* <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/register">
+            <Register />
+          </Route>
+          <Route path="/forgotpass">
+             <ForgotPassword/>
+          </Route>
+          <Route path="/resetpass">
+             <ResetPassword/>
+          </Route>
+          <Route path="/verifyaccount">
+             <VerifyAccount/>
+          </Route> */}
         </Switch>
       </Suspense>
     </Router>

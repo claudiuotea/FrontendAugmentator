@@ -1,4 +1,4 @@
-import { Button, Grid, makeStyles, TextField,LinearProgress } from "@material-ui/core";
+import { Button, Grid, makeStyles, TextField, CircularProgress, LinearProgress } from "@material-ui/core";
 import React, { useState } from "react";
 import { LoginInterface } from "../Models/Interfaces";
 import AccountService from "../Services/AccountService";
@@ -53,8 +53,6 @@ export const Login: React.FunctionComponent<any> = () => {
      //trimite request la server
      AccountService.login(data)
          .then(resp => {
-          //salvez jwt-u primit in local storage
-           window.localStorage.setItem("token",JSON.stringify(resp.data.token))
             console.log(resp)
          })
          .catch(err => {

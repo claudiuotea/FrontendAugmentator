@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
      margin: theme.spacing(4),
      verticalAlign:"middle",
      marginTop:"35%"
-  },
+  }
   linearProgress: {
     marginTop:15,
     marginBottom:15

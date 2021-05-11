@@ -1,4 +1,4 @@
-import { Button, Grid, makeStyles, TextField, LinearProgress } from "@material-ui/core";
+import { Button, Grid, makeStyles, TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import { RegisterInterface } from "../Models/Interfaces";
 import AccountService from "../Services/AccountService";
@@ -18,11 +18,6 @@ const useStyles = makeStyles((theme) => ({
     verticalAlign: "middle",
     marginTop: "35%",
   },
-
-  linearProgress: {
-    marginTop:15,
-    marginBottom:15
-},
 }));
 
 export const Register: React.FunctionComponent<any> = () => {
@@ -32,19 +27,6 @@ export const Register: React.FunctionComponent<any> = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
-  //pentru loading bar
- const [isFeedbackLoading, setIsFeedbackLoading] = React.useState(false);
-
- //verifica daca trebuie afisat loading bar
- const LinearFeedback = () => {
-  if (isFeedbackLoading) {
-      return (
-          <div className={classes.linearProgress}>
-              <LinearProgress/>
-          </div>
-      );
-  }
-}
 
   const onSubmit = async (event: any) => {
     if (password === confirmPassword) {
@@ -125,7 +107,6 @@ export const Register: React.FunctionComponent<any> = () => {
             setConfirmPassword(e.target.value);
           }}
         />
-        {LinearFeedback()}
         <Button
           fullWidth
           type="submit"

@@ -6,10 +6,7 @@ import { Login } from "./Login";
 import { Register } from "./Register";
 import { ResetPassword } from "./ResetPassword";
 import { VerifyAccount } from "./VerifyAccount";
-import {
-  BrowserRouter as Router,
-  useLocation,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, useLocation } from "react-router-dom";
 //Creez un obiect CSS
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,40 +28,34 @@ export const Account: React.FunctionComponent<{}> = () => {
   //instantiez obiectul
   const classes = useStyles();
   const location = useLocation();
-
+  
   //stabilim ce componenta randam in functie de path
-  const renderSwitch = (param: string) => {
-    switch (param) {
-      case "/account/login":
-        return <Login />;
-      case "/account/register":
-        return <Register />;
-      case "/account/resetpass":
-        return <ResetPassword />;
-      case "/account/forgotpass":
-        return <ForgotPassword />;
-      case "/account/verifyaccount":
-        return <VerifyAccount />;
-      default:
-        //TODO aici
-        return <div>Wrong path</div>;
-    }
-  };
+  const renderSwitch = (param:string) => {
+   switch(param) {
+     case '/account/login':
+       return <Login/>;
+     case '/account/register':
+        return <Register/>
+      
+       default:
+          //TODO aici
+       return <div>Wrong path</div>;
+   }
+ }
+ 
 
   return (
     //impart ecranul in 2 coloane
-    <div className={classes.root + classes.gridItem}>
-      <Grid container className={classes.gridItem}>
-        <Grid
-          item
-          xs={12}
-          sm={9}
-          style={{
-            backgroundImage: `url(${Image})`,
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-          }}
-        >
+    <div
+      className={classes.root + classes.gridItem}
+    >
+      <Grid container className={classes.gridItem} >
+        <Grid item xs={12} sm={9} style={{
+        backgroundImage: `url(${Image})`,
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+      }}>
+          de
         </Grid>
         <Grid item xs={12} sm={3}>
           {renderSwitch(location.pathname)}

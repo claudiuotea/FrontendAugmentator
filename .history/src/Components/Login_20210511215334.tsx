@@ -1,4 +1,4 @@
-import { Button, Grid, makeStyles, TextField,LinearProgress } from "@material-ui/core";
+import { Button, Grid, makeStyles, TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import { LoginInterface } from "../Models/Interfaces";
 import AccountService from "../Services/AccountService";
@@ -17,11 +17,7 @@ const useStyles = makeStyles((theme) => ({
      margin: theme.spacing(4),
      verticalAlign:"middle",
      marginTop:"35%"
-  },
-  linearProgress: {
-    marginTop:15,
-    marginBottom:15
-},
+  }
 }));
 
 export const Login: React.FunctionComponent<any> = () => {
@@ -29,42 +25,29 @@ export const Login: React.FunctionComponent<any> = () => {
   const classes = useStyles();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  //pentru loading bar
  const [isFeedbackLoading, setIsFeedbackLoading] = React.useState(false);
-  
- //verifica daca trebuie afisat loading bar
- const LinearFeedback = () => {
+  const circularFeedback = () => {
     if (isFeedbackLoading) {
         return (
-            <div className={classes.linearProgress}>
-                <LinearProgress/>
+            <div className={classes.root}>
+                <CircularProgress/>
             </div>
         );
     }
   }
   const onSubmit = async (event:any) =>{
-    //setam ca inca asteptam raspunsul pentru loading bar
-    setIsFeedbackLoading(true) 
-    
-    const data : LoginInterface = {
+     const data : LoginInterface = {
         username: username,
         password: password
      }
      //trimite request la server
      AccountService.login(data)
          .then(resp => {
-          //salvez jwt-u primit in local storage
-           window.localStorage.setItem("token",JSON.stringify(resp.data.token))
             console.log(resp)
          })
          .catch(err => {
             console.log(err)
          })
-         .finally( () =>{
-           //am primit raspunsul
-           setIsFeedbackLoading(false)
-         })
-         
   }
   return (
     //impart ecranul in 2 coloane
@@ -100,7 +83,6 @@ export const Login: React.FunctionComponent<any> = () => {
             <div style={{"textAlign":"center","margin":"3px"}} >
               <a href="/account/forgotpass">Forgot password? Click here!</a>
             </div>
-            {LinearFeedback()}
             <Button fullWidth type="submit" variant="contained" color="primary"  onClick={onSubmit}>
                Sign in
             </Button>

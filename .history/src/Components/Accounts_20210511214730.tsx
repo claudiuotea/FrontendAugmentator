@@ -8,6 +8,8 @@ import { ResetPassword } from "./ResetPassword";
 import { VerifyAccount } from "./VerifyAccount";
 import {
   BrowserRouter as Router,
+  Switch,
+  Route,
   useLocation,
 } from "react-router-dom";
 //Creez un obiect CSS

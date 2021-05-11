@@ -1,4 +1,4 @@
-import { Button, Grid, makeStyles, TextField , LinearProgress} from "@material-ui/core";
+import { Button, Grid, makeStyles, TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import { ForgotPasswordInterface } from "../Models/Interfaces";
 import AccountService from "../Services/AccountService";
@@ -17,31 +17,15 @@ const useStyles = makeStyles((theme) => ({
      margin: theme.spacing(4),
      verticalAlign:"middle",
      marginTop:"35%"
-  },
-  linearProgress: {
-    marginTop:15,
-    marginBottom:15
-},
+  }
 }));
 
 export const ForgotPassword: React.FunctionComponent<any> = () => {
   //instantiez obiectul
   const classes = useStyles();
   const [email,setEmail] = useState<string>('')
-  //pentru loading bar
- const [isFeedbackLoading, setIsFeedbackLoading] = React.useState(false);
- 
-//verifica daca trebuie afisat loading bar
-const LinearFeedback = () => {
-  if (isFeedbackLoading) {
-      return (
-          <div className={classes.linearProgress}>
-              <LinearProgress/>
-          </div>
-      );
-  }
-}
 
+ 
   const onSubmit = async (event:any) =>{
      const data : ForgotPasswordInterface = {
         email:email
@@ -72,7 +56,6 @@ const LinearFeedback = () => {
                 setEmail(e.target.value);
               }}
             />
-            {LinearFeedback()}
             <Button fullWidth type="submit" variant="contained" color="primary"  onClick={onSubmit}>
                Submit
             </Button>

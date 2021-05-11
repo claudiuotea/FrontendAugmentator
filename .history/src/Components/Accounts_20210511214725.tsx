@@ -8,6 +8,8 @@ import { ResetPassword } from "./ResetPassword";
 import { VerifyAccount } from "./VerifyAccount";
 import {
   BrowserRouter as Router,
+  Switch,
+  Route,
   useLocation,
 } from "react-router-dom";
 //Creez un obiect CSS
@@ -65,6 +67,7 @@ export const Account: React.FunctionComponent<{}> = () => {
             backgroundSize: "cover",
           }}
         >
+          de
         </Grid>
         <Grid item xs={12} sm={3}>
           {renderSwitch(location.pathname)}
