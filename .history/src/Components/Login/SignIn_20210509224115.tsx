@@ -1,0 +1,17 @@
+import { Grid } from "@material-ui/core"
+
+export const Login : React.FunctionComponent<any> = () =>{
+   return(
+      <div>
+         <Grid>
+            <Grid item xs={6} style={{backgroundColor:"black"}}>
+
+            </Grid>
+            
+            <Grid item xs={6} style={{backgroundColor:"red"}}>
+
+            </Grid>
+         </Grid>
+      </div>
+   )
+}
