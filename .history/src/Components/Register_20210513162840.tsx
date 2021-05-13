@@ -83,7 +83,6 @@ export const Register: React.FunctionComponent<any> = () => {
           onChange={(e) => {
             setEmail(e.target.value);
           }}
-          disabled={isFeedbackLoading}
         />
         <TextField
           variant="outlined"
@@ -97,7 +96,6 @@ export const Register: React.FunctionComponent<any> = () => {
           onChange={(e) => {
             setUsername(e.target.value);
           }}
-          disabled={isFeedbackLoading}
         />
         <TextField
           variant="outlined"

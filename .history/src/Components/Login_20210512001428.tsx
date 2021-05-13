@@ -31,7 +31,7 @@ export const Login: React.FunctionComponent<any> = () => {
   const [password, setPassword] = useState("");
   //pentru loading bar
  const [isFeedbackLoading, setIsFeedbackLoading] = React.useState(false);
-  const history = useHistory()
+  history = useHistory()
 
  //verifica daca trebuie afisat loading bar
  const LinearFeedback = () => {
@@ -81,7 +81,6 @@ export const Login: React.FunctionComponent<any> = () => {
               name="username"
               value={username}
               autoFocus
-              disabled={isFeedbackLoading}
               onChange={(e) => {
                 setUsername(e.target.value);
               }}
@@ -91,7 +90,6 @@ export const Login: React.FunctionComponent<any> = () => {
               margin="normal"
               fullWidth
               required
-              disabled={isFeedbackLoading}
               label="Password"
               name="password"
               value={password}

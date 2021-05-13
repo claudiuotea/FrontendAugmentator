@@ -19,7 +19,7 @@ export const AppRoutes: React.FunctionComponent<{}> = () => {
             <NavbarNotLogged/>
             <Account/>
           </Route>
-          <PrivateRoute path="/app" component={()=><MainContainer/>}>
+          <PrivateRoute path="/home" component={()=><MainContainer/>}>
           </PrivateRoute>
         </Switch>
       </Suspense>

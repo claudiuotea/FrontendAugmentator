@@ -1,0 +1,22 @@
+import { useEffect, useState } from "react";
+import { FunctionComponent } from "react";
+import {useHistory} from "react-router"
+
+
+//verifica daca user-ul are token (este deja autentificat)
+export const RequireAuth : React.FunctionComponent<FunctionComponent> = (comp) =>{
+   const [isAuthenticated,setIsAuthenticated] = useState<boolean>(false)
+   const history = useHistory()
+
+   useEffect(() => {
+      const jwt = window.localStorage.getItem("token")
+      //e autentificat
+      if(jwt != null)
+         setIsAuthenticated(true)
+
+   }, [])
+
+   return(
+      {isAuthenticated?comp:history.push('/account/login')}
+   )
+}

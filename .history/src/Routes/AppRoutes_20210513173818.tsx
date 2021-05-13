@@ -13,13 +13,14 @@ export const AppRoutes: React.FunctionComponent<{}> = () => {
         <Switch>
           <Route exact path="/">
             <NavbarNotLogged/>
-            <Redirect push to={"/home"}/>
+            <Redirect push to={"/account/login"}/>
           </Route>
           <Route path="/account">
             <NavbarNotLogged/>
             <Account/>
           </Route>
-          <PrivateRoute path="/app" component={()=><MainContainer/>}>
+          <PrivateRoute path="/home" component={()=><MainContainer/>}>
+            <Route path="/contact"/>
           </PrivateRoute>
         </Switch>
       </Suspense>
