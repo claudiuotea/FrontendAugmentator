@@ -54,16 +54,17 @@ const useStyles = makeStyles({
 
 export const UsersTable: FunctionComponent<any> = () => {
   const classes = useStyles();
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [tableRows, setTableRows] = useState<UserDataInterface[]>([]);
   const [filteredTablerows, setFilteredTableRows] = useState<
     UserDataInterface[]
   >([]);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [numOfUsersSelected, setNumOfUsersSelected] = useState(0);
-  const [selected, setSelected] = useState<string[]>([]);
+  const [selected, setSelected] = React.useState<string[]>([]);
+  const jwt = window.localStorage.getItem("token");
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -77,8 +78,6 @@ export const UsersTable: FunctionComponent<any> = () => {
   };
 
   useEffect(() => {
-    //ptc este un bug cu undefined
-    setFilteredTableRows([])
     getUsers();
   }, []);
 
@@ -149,109 +148,107 @@ export const UsersTable: FunctionComponent<any> = () => {
     }
     setSelected([]);
   };
-  
-  return (
-    <>
-    {!isLoading && typeof (filteredTablerows) != "undefined"?(<div>
-    <TextField
-      autoComplete="fname"
-      name="firstName"
-      variant="outlined"
-      required
-      fullWidth
-      id="firstName"
-      label="Search for an userrr"
-      autoFocus
-      value={searchKeyword}
-      onChange={updateInput}
-      InputProps={{
-        startAdornment: (
-          <InputAdornment position="start">
-            <SearchIcon />
-          </InputAdornment>
-        ),
-      }}
-    />
-    <Paper className={classes.root}>
-      <EnhancedTableToolbar
-        numSelected={selected.length}
-        itemsToDelete={selected}
-        updateTable={getUsers}
-      />
-      <TableContainer className={classes.container}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              <TableCell padding="checkbox">
-                <Checkbox
-                  // indeterminate={
-                  //   selected.length > 0 &&
-                  //   selected.length < filteredTablerows.length
-                  // }
-                  // checked={
-                  //   filteredTablerows.length > 0 &&
-                  //   selected.length == filteredTablerows.length
-                  // }
-                  onChange={onSelectAllClick}
-                />
-              </TableCell>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {filteredTablerows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row, index) => {
-                const isItemSelected = isSelected(row.public_id);
-                return (
-                  <TableRow
-                    hover
-                    role="checkbox"
-                    tabIndex={-1}
-                    aria-checked={isItemSelected}
-                    selected={isItemSelected}
-                    key={row.email}
-                    onClick={(event) => handleClick(event, row.public_id)}
-                  >
-                    <TableCell padding="checkbox">
-                      <Checkbox checked={isItemSelected} />
-                    </TableCell>
 
-                    {columns.map((column, index) => {
-                      const value = row[column.id].toString();
-                      return (
-                        <TableCell align={column.align} key={index}>
-                          {column.format && typeof value === "number"
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={filteredTablerows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
+  return (
+    <div>
+      <TextField
+        autoComplete="fname"
+        name="firstName"
+        variant="outlined"
+        required
+        fullWidth
+        id="firstName"
+        label="Search for an userd"
+        autoFocus
+        value={searchKeyword}
+        onChange={updateInput}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          ),
+        }}
       />
-    </Paper>
-  </div>):<div>Loading</div>}
-    </>
+      <Paper className={classes.root}>
+        <EnhancedTableToolbar
+          numSelected={selected.length}
+          itemsToDelete={selected}
+          updateTable={getUsers}
+        />
+        <TableContainer className={classes.container}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                <TableCell padding="checkbox">
+                  <Checkbox
+                    // indeterminate={
+                    //   selected.length > 0 &&
+                    //   selected.length < filteredTablerows.length
+                    // }
+                    // checked={
+                    //   filteredTablerows.length > 0 &&
+                    //   selected.length == filteredTablerows.length
+                    // }
+                    onChange={onSelectAllClick}
+                  />
+                </TableCell>
+                {columns.map((column) => (
+                  <TableCell
+                    key={column.id}
+                    align={column.align}
+                    style={{ minWidth: column.minWidth }}
+                  >
+                    {column.label}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {filteredTablerows
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((row, index) => {
+                  const isItemSelected = isSelected(row.public_id);
+                  return (
+                    <TableRow
+                      hover
+                      role="checkbox"
+                      tabIndex={-1}
+                      aria-checked={isItemSelected}
+                      selected={isItemSelected}
+                      key={row.email}
+                      onClick={(event) => handleClick(event, row.public_id)}
+                    >
+                      <TableCell padding="checkbox">
+                        <Checkbox checked={isItemSelected} />
+                      </TableCell>
+
+                      {columns.map((column, index) => {
+                        const value = row[column.id].toString();
+                        return (
+                          <TableCell align={column.align} key={index}>
+                            {column.format && typeof value === "number"
+                              ? column.format(value)
+                              : value}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  );
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={filteredTablerows.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
+      </Paper>
+    </div>
   );
 };

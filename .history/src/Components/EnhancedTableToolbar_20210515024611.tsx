@@ -14,7 +14,6 @@ import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import AdminService from "../Services/AdminService";
 import AccountService from "../Services/AccountService";
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 const useToolbarStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -76,25 +75,6 @@ export const EnhancedTableToolbar = (props: ITableToolbarProps) => {
     })
 };
 
-const onClickVerifyButton = () => {
-  props.itemsToDelete.map((user) =>{
-      AdminService.verifyUser(user)
-      .then(resp => {
-        props.updateTable()
-      })
-      .catch(err => {
-        if (err.response.data.msg === "Token has expired") {
-          AccountService.refreshToken().then((resp1) => {
-            localStorage.setItem("AccessToken", resp1.data.access_token);
-            AdminService.verifyUser(user).then((resp2) => {
-              props.updateTable()
-            });
-          });
-        }
-      })
-  })
-};
-
   return (
     <Toolbar>
       {numSelected > 0 ? (
@@ -126,11 +106,6 @@ const onClickVerifyButton = () => {
           <Tooltip title="Promote user">
             <IconButton aria-label="promote" onClick={onClickPromoteButton}>
               <TrendingUpIcon />
-            </IconButton>
-          </Tooltip>
-          <Tooltip title="Verify user">
-            <IconButton aria-label="verify" onClick={onClickVerifyButton}>
-              <CheckCircleIcon />
             </IconButton>
           </Tooltip>
         </div>

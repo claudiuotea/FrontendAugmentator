@@ -54,16 +54,17 @@ const useStyles = makeStyles({
 
 export const UsersTable: FunctionComponent<any> = () => {
   const classes = useStyles();
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [tableRows, setTableRows] = useState<UserDataInterface[]>([]);
   const [filteredTablerows, setFilteredTableRows] = useState<
     UserDataInterface[]
   >([]);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [numOfUsersSelected, setNumOfUsersSelected] = useState(0);
-  const [selected, setSelected] = useState<string[]>([]);
+  const [selected, setSelected] = React.useState<string[]>([]);
+  const jwt = window.localStorage.getItem("token");
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -150,9 +151,7 @@ export const UsersTable: FunctionComponent<any> = () => {
     setSelected([]);
   };
   
-  return (
-    <>
-    {!isLoading && typeof (filteredTablerows) != "undefined"?(<div>
+  return ({!isLoading &&(<div>
     <TextField
       autoComplete="fname"
       name="firstName"
@@ -160,7 +159,7 @@ export const UsersTable: FunctionComponent<any> = () => {
       required
       fullWidth
       id="firstName"
-      label="Search for an userrr"
+      label="Search for an user"
       autoFocus
       value={searchKeyword}
       onChange={updateInput}
@@ -251,7 +250,7 @@ export const UsersTable: FunctionComponent<any> = () => {
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
     </Paper>
-  </div>):<div>Loading</div>}
-    </>
+  </div>)}
+    
   );
 };

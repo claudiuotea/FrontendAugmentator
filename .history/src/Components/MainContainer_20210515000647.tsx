@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
         width: drawerWidth,
         flexShrink: 0,
       },
-      opacity: "80%",
+      opacity:"80%"
     },
     appBar: {
       [theme.breakpoints.up("sm")]: {
@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       backgroundColor: "transparent",
       boxShadow: "none",
-      color: "black",
+      color:"black"
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -72,6 +72,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       padding: theme.spacing(3),
     },
+    
   })
 );
 
@@ -91,25 +92,18 @@ export const MainContainer: React.FunctionComponent<{}> = () => {
     setMobileOpen(!mobileOpen);
   };
   //user admin sau nu?
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
-
+  const [isAdmin, setIsAdmin] = useState<boolean>(false)
+  
   useEffect(() => {
-    //trimite request ca sa vad daca e admin
-    AccountService.checkAdmin()
-      .then((resp) => {
-        setIsAdmin(resp.data.admin);
-      }) //in caz ca este expirat token-ul, apelez refresh token si reincerc
-      .catch((err) => {
-        if (err.response.data.msg === "Token has expired") {
-          AccountService.refreshToken().then((resp1) => {
-            localStorage.setItem("AccessToken", resp1.data.access_token);
-            AccountService.checkAdmin().then((resp2) => {
-              setIsAdmin(resp2.data.admin);
-            });
-          });
-        }
-      });
-  }, []);
+     //trimite request ca sa vad daca e admin
+     AccountService.checkAdmin()
+         .then(resp => {
+            setIsAdmin(resp.data.admin)
+         })
+         .catch(err => {
+            console.log(error.response.data)
+         })
+  }, [])
 
   //stabilim ce componenta randam in functie de path
   const renderSwitch = (param: string) => {
@@ -121,7 +115,7 @@ export const MainContainer: React.FunctionComponent<{}> = () => {
       case "/app/contact":
         return <div>contact</div>;
       case "/app/admin":
-        return isAdmin ? <Admin /> : <div>404</div>;
+            return isAdmin?<Admin/>:<div>404</div>
       default:
         //TODO aici
         return <div>Wrong path</div>;
@@ -146,30 +140,19 @@ export const MainContainer: React.FunctionComponent<{}> = () => {
           </ListItemIcon>
           <ListItemText primary="Stats" />
         </ListItem>
-        <ListItem
-          button
-          key="contact"
-          onClick={() => history.push("/app/contact")}
-        >
+        <ListItem button key="contact" onClick={() => history.push("/app/contact")}>
           <ListItemIcon>
             <PermContactCalendarIcon></PermContactCalendarIcon>
           </ListItemIcon>
           <ListItemText primary="Contact" />
         </ListItem>
-        {
-          //doar admin are voie sa vada
-          isAdmin ? (
-            <ListItem
-              button
-              key="admin"
-              onClick={() => history.push("/app/admin")}
-            >
-              <ListItemIcon>
-                <SupervisorAccountIcon></SupervisorAccountIcon>
-              </ListItemIcon>
-              <ListItemText primary="Admin" />
-            </ListItem>
-          ) : null
+        {//doar admin are voie sa vada
+        isAdmin?<ListItem button key="admin" onClick={() => history.push("/app/admin")}>
+          <ListItemIcon>
+            <SupervisorAccountIcon></SupervisorAccountIcon>
+          </ListItemIcon>
+          <ListItemText primary="Admin" />
+        </ListItem>:null
         }
         <ListItem button key="logout" onClick={() => AccountService.logout()}>
           <ListItemText>LOGOUT</ListItemText>
@@ -180,17 +163,8 @@ export const MainContainer: React.FunctionComponent<{}> = () => {
 
   return (
     <div className={classes.root}>
-      <img
-        src={Image}
-        style={{
-          opacity: 0.4,
-          position: "absolute",
-          left: 0,
-          top: 0,
-          width: "100vw",
-          height: "100vh",
-        }}
-      />
+       <img src={Image}
+       style={{opacity:0.4,position:"absolute",left:0,top:0,width:"100vw",height:"100vh"}}/>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
@@ -235,7 +209,7 @@ export const MainContainer: React.FunctionComponent<{}> = () => {
           </Drawer>
         </Hidden>
       </nav>
-      <main className={classes.content}>
+      <main className={classes.content} >
         <div className={classes.toolbar} />
         {renderSwitch(location.pathname)}
       </main>

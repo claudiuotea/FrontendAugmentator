@@ -78,7 +78,7 @@ export const EnhancedTableToolbar = (props: ITableToolbarProps) => {
 
 const onClickVerifyButton = () => {
   props.itemsToDelete.map((user) =>{
-      AdminService.verifyUser(user)
+      AdminService.promoteUser(user)
       .then(resp => {
         props.updateTable()
       })
@@ -86,7 +86,7 @@ const onClickVerifyButton = () => {
         if (err.response.data.msg === "Token has expired") {
           AccountService.refreshToken().then((resp1) => {
             localStorage.setItem("AccessToken", resp1.data.access_token);
-            AdminService.verifyUser(user).then((resp2) => {
+            AdminService.promoteUser(user).then((resp2) => {
               props.updateTable()
             });
           });

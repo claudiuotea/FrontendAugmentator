@@ -42,7 +42,7 @@ export default class AccountService{
    }
 
    //verifica daca token-ul e valid, daca nu e valid, utilizeaza refresh token ca sa primeasca un token nou
-   static refreshToken = () : Promise<any> =>{
+   static refreshToken = () : void =>{
       let refreshToken = window.localStorage.getItem('RefreshToken')
 
       let config = {
@@ -50,12 +50,16 @@ export default class AccountService{
             "Authorization": `Bearer ${refreshToken}`
          }
        }
-       localStorage.removeItem('AccessToken')
-      return axios.post(`${AccountService.BASE_URL}/refresh`,{}, config)
+       localStorage.removeItem('RefreshToken')
+      axios.post(`${AccountService.BASE_URL}/refresh`,{}, config).then(resp =>{
+         console.log("Am primit frumusetea asta " + resp.data.access_token)
+         localStorage.setItem('RefreshToken',resp.data.access_token)
+      })
    }
 
    static logout = () : void =>{
       localStorage.removeItem('RefreshToken')
       localStorage.removeItem('AccessToken')
    }
+   
 }

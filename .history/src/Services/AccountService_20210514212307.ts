@@ -29,33 +29,14 @@ export default class AccountService{
       return axios.post(`${AccountService.BASE_URL}/verifyaccount`,data)
    }
 
+   
    //verifica daca user-ul este admin
    static checkAdmin = () : Promise<any> =>{
-      let accessToken = window.localStorage.getItem('AccessToken')
-      console.log("Sunt in checkAdmin si primesc token " + accessToken)
-      let config = {
-         headers: {
-            "Authorization": `Bearer ${accessToken}`
-         }
-       }
-      return axios.get(`${AccountService.BASE_URL}/checkadmin`, config)
+      return axios.get(`${AccountService.BASE_URL}/checkadmin`)
    }
 
-   //verifica daca token-ul e valid, daca nu e valid, utilizeaza refresh token ca sa primeasca un token nou
-   static refreshToken = () : Promise<any> =>{
-      let refreshToken = window.localStorage.getItem('RefreshToken')
-
-      let config = {
-         headers: {
-            "Authorization": `Bearer ${refreshToken}`
-         }
-       }
-       localStorage.removeItem('AccessToken')
-      return axios.post(`${AccountService.BASE_URL}/refresh`,{}, config)
+   static logout = () : Promise<any> =>{
+      return axios.get(`${AccountService.BASE_URL}/logout`)
    }
-
-   static logout = () : void =>{
-      localStorage.removeItem('RefreshToken')
-      localStorage.removeItem('AccessToken')
-   }
+   
 }

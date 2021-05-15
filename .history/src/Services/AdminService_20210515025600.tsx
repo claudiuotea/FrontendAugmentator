@@ -45,7 +45,7 @@ export default class AdminService{
             "Authorization": `Bearer ${accessToken}`
          }
        }
-      return axios.put(`${AdminService.BASE_URL}/verifybyadmin`,{"public_id":public_id},config)
+      return axios.put(`${AdminService.BASE_URL}/user/${public_id}`,{},config)
    } 
    
 }

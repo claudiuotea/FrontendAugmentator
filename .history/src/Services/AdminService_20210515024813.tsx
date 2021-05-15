@@ -36,16 +36,5 @@ export default class AdminService{
        }
       return axios.put(`${AdminService.BASE_URL}/user/${public_id}`,{},config)
    } 
-
-   //verifica un user
-   static verifyUser = (public_id:string) : Promise<any> =>{
-      let accessToken = window.localStorage.getItem('AccessToken')
-      let config = {
-         headers: {
-            "Authorization": `Bearer ${accessToken}`
-         }
-       }
-      return axios.put(`${AdminService.BASE_URL}/verifybyadmin`,{"public_id":public_id},config)
-   } 
    
 }

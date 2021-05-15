@@ -63,7 +63,8 @@ export const UsersTable: FunctionComponent<any> = () => {
   >([]);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [numOfUsersSelected, setNumOfUsersSelected] = useState(0);
-  const [selected, setSelected] = useState<string[]>([]);
+  const [selected, setSelected] = React.useState<string[]>([]);
+  const jwt = window.localStorage.getItem("token");
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);

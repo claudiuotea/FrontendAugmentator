@@ -63,7 +63,8 @@ export const UsersTable: FunctionComponent<any> = () => {
   >([]);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [numOfUsersSelected, setNumOfUsersSelected] = useState(0);
-  const [selected, setSelected] = useState<string[]>([]);
+  const [selected, setSelected] = React.useState<string[]>([]);
+  const jwt = window.localStorage.getItem("token");
 
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -152,7 +153,7 @@ export const UsersTable: FunctionComponent<any> = () => {
   
   return (
     <>
-    {!isLoading && typeof (filteredTablerows) != "undefined"?(<div>
+    {!isLoading?(<div>
     <TextField
       autoComplete="fname"
       name="firstName"
@@ -160,7 +161,7 @@ export const UsersTable: FunctionComponent<any> = () => {
       required
       fullWidth
       id="firstName"
-      label="Search for an userrr"
+      label="Search for an use"
       autoFocus
       value={searchKeyword}
       onChange={updateInput}
