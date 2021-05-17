@@ -10,7 +10,6 @@ import {
 import React, { useState } from "react";
 import FileUploadService from "../Services/FileUploadService";
 import {DropzoneDialog} from 'material-ui-dropzone'
-import AccountService from "../Services/AccountService";
 
 export const Home: React.FunctionComponent<{}> = () => {
   const [selectedFile, setSelectedFile] = useState<any>();
@@ -28,7 +27,6 @@ export const Home: React.FunctionComponent<{}> = () => {
    const [isUploadOpen, setIsUploadOpen] = useState<boolean>(false)
    const [flipProbability, setFlipProbability] = useState(0)
    const [eraseProbability, setEraseProbability] = useState(0)
-   const [rotateProbability, setRotateProbability] = useState(0)
 
   //pentru fisierele selectate de catre user
   const onFileChange = (files:any) => {
@@ -39,41 +37,16 @@ export const Home: React.FunctionComponent<{}> = () => {
 
   //incarc datele intr-un formData si le trimit la server
   const onFileUpload = () => {
-    const formData = new FormData();
-    formData.append("myFile", selectedFile, fileName);
-    //o sa adaug si parametrii pentru augmentari tot aici
-    formData.append("isClahe",isClaheChecked.toString())
-    formData.append("isGray", isGrayscaleChecked.toString())
-    formData.append("isFlip",isFlipChecked.toString())
-    formData.append("isErase",isEraseChecked.toString())
-    formData.append("isFlipBase",isFlipBase.toString())
-    formData.append("isFlipClahe",isFlipClahe.toString())
-    formData.append("isFlipGray",isFlipGray.toString())
-    formData.append("isEraseBase",isEraseBase.toString())
-    formData.append("isEraseClahe",isEraseClahe.toString())
-    formData.append("isEraseGray",isEraseGray.toString())
-    formData.append("flipProbability",flipProbability.toString())
-    formData.append("eraseProbability",eraseProbability.toString())
-    formData.append("rotateProbability",rotateProbability.toString())
-    
-
-   FileUploadService.uploadFile(formData)
-   .then(resp=> {
-      console.log(resp)
-   })
-   .catch(err =>{
-      console.log("ERR" + err)
-      if(err.response.data.msg=="Token has expired")
-      {
-         AccountService.refreshToken()
-         .then(resp=>{
-            localStorage.setItem("AccessToken", resp.data.access_token);
-            FileUploadService.uploadFile(formData)
-         })
-         .catch(err2=> console.log("refreshToken err " + err2))
-      }
-   })
-
+//     const formData = new FormData();
+//     formData.append("myFile", selectedFile, selectedFile.name);
+//     setFileName(selectedFile.name);
+//     FileUploadService.uploadFile(formData)
+//       .then((resp) => {
+//         console.log(resp);
+//       })
+//       .catch((er) => {
+//         console.log(er.error);
+//       });
       console.log(selectedFile + "= selectedFile")
       console.log(fileName + "= fileName")
       console.log(isClaheChecked + "= isClaheChecked")
@@ -97,19 +70,13 @@ export const Home: React.FunctionComponent<{}> = () => {
           checked={isFlipChecked}
           onChange={(e: any) =>{
              setIsFlipChecked(!isFlipChecked)
-             if (isFlipChecked == false)
-               {
-                  setFlipProbability(5)
-                  setRotateProbability(5)}
-            else {
-               setFlipProbability(0)
-               setRotateProbability(0)}
+             setFlipProbability(5)
           }}
         />
       </div>
       {isFlipChecked && (
         <div>
-          <Typography gutterBottom>Flip probability</Typography>
+          <Typography gutterBottom>Probability</Typography>
           <Slider
             defaultValue={5}
             marks={true}
@@ -118,16 +85,6 @@ export const Home: React.FunctionComponent<{}> = () => {
             max={100}
             step={5}
             onChange={(event,value)=>{setFlipProbability(value as number)}}
-          />
-          <Typography gutterBottom>Rotation probability </Typography>
-          <Slider
-            defaultValue={5}
-            marks={true}
-            valueLabelDisplay="on"
-            min={5}
-            max={100}
-            step={5}
-            onChange={(event,value)=>{setRotateProbability(value as number)}}
           />
           <span>Flip on base dataset</span>
           <Checkbox
@@ -157,9 +114,7 @@ export const Home: React.FunctionComponent<{}> = () => {
           checked={isEraseChecked}
           onChange={(e: any) => {
              setIsEraseChecked(!isEraseChecked)
-             if(isEraseChecked == false)
-               setEraseProbability(5)
-            else setEraseProbability(0)
+            setEraseProbability(5)
             }}
         />
       </div>
@@ -213,10 +168,10 @@ export const Home: React.FunctionComponent<{}> = () => {
            <DropzoneDialog
            open={isUploadOpen}
            onSave={onFileChange}
-           acceptedFiles={['.ZIP']}
+           acceptedFiles={['.ZIP','.RAR']}
            showPreviews={true}
            onClose={handleClose}
-           maxFileSize={100000000}
+           maxFileSize={500000000}
            filesLimit={1}
            />
 

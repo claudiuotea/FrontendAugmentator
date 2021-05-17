@@ -54,7 +54,6 @@ export const Home: React.FunctionComponent<{}> = () => {
     formData.append("isEraseGray",isEraseGray.toString())
     formData.append("flipProbability",flipProbability.toString())
     formData.append("eraseProbability",eraseProbability.toString())
-    formData.append("rotateProbability",rotateProbability.toString())
     
 
    FileUploadService.uploadFile(formData)
@@ -109,7 +108,7 @@ export const Home: React.FunctionComponent<{}> = () => {
       </div>
       {isFlipChecked && (
         <div>
-          <Typography gutterBottom>Flip probability</Typography>
+          <Typography gutterBottom>Probability flip</Typography>
           <Slider
             defaultValue={5}
             marks={true}
@@ -119,7 +118,7 @@ export const Home: React.FunctionComponent<{}> = () => {
             step={5}
             onChange={(event,value)=>{setFlipProbability(value as number)}}
           />
-          <Typography gutterBottom>Rotation probability </Typography>
+          <Typography gutterBottom>Probability rotation</Typography>
           <Slider
             defaultValue={5}
             marks={true}

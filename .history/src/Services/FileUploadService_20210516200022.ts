@@ -8,7 +8,7 @@ export default class FileUploadService {
       let accessToken = window.localStorage.getItem('AccessToken')
       return axios({
          method: "post",
-         url: FileUploadService.BASE_URL+"/uploadfile",
+         url: "myurl",
          data: bodyFormData,
          headers: { "Content-Type": "multipart/form-data" , "Authorization": `Bearer ${accessToken}` },
        })
@@ -18,5 +18,10 @@ export default class FileUploadService {
    static getFile = (fileName: string) =>{
        window.open("http://127.0.0.1:5000/get-file/" + fileName)
    }
+
+
+  
+
+
 
 }

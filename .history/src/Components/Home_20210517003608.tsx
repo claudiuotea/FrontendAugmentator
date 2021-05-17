@@ -28,7 +28,6 @@ export const Home: React.FunctionComponent<{}> = () => {
    const [isUploadOpen, setIsUploadOpen] = useState<boolean>(false)
    const [flipProbability, setFlipProbability] = useState(0)
    const [eraseProbability, setEraseProbability] = useState(0)
-   const [rotateProbability, setRotateProbability] = useState(0)
 
   //pentru fisierele selectate de catre user
   const onFileChange = (files:any) => {
@@ -54,7 +53,6 @@ export const Home: React.FunctionComponent<{}> = () => {
     formData.append("isEraseGray",isEraseGray.toString())
     formData.append("flipProbability",flipProbability.toString())
     formData.append("eraseProbability",eraseProbability.toString())
-    formData.append("rotateProbability",rotateProbability.toString())
     
 
    FileUploadService.uploadFile(formData)
@@ -97,19 +95,15 @@ export const Home: React.FunctionComponent<{}> = () => {
           checked={isFlipChecked}
           onChange={(e: any) =>{
              setIsFlipChecked(!isFlipChecked)
-             if (isFlipChecked == false)
-               {
-                  setFlipProbability(5)
-                  setRotateProbability(5)}
-            else {
-               setFlipProbability(0)
-               setRotateProbability(0)}
+             if (isFlipChecked == true)
+               setFlipProbability(5)
+            else setFlipProbability(0)
           }}
         />
       </div>
       {isFlipChecked && (
         <div>
-          <Typography gutterBottom>Flip probability</Typography>
+          <Typography gutterBottom>Probability</Typography>
           <Slider
             defaultValue={5}
             marks={true}
@@ -118,16 +112,6 @@ export const Home: React.FunctionComponent<{}> = () => {
             max={100}
             step={5}
             onChange={(event,value)=>{setFlipProbability(value as number)}}
-          />
-          <Typography gutterBottom>Rotation probability </Typography>
-          <Slider
-            defaultValue={5}
-            marks={true}
-            valueLabelDisplay="on"
-            min={5}
-            max={100}
-            step={5}
-            onChange={(event,value)=>{setRotateProbability(value as number)}}
           />
           <span>Flip on base dataset</span>
           <Checkbox
@@ -157,7 +141,7 @@ export const Home: React.FunctionComponent<{}> = () => {
           checked={isEraseChecked}
           onChange={(e: any) => {
              setIsEraseChecked(!isEraseChecked)
-             if(isEraseChecked == false)
+             if(isEraseChecked == true)
                setEraseProbability(5)
             else setEraseProbability(0)
             }}

@@ -54,7 +54,6 @@ export const Home: React.FunctionComponent<{}> = () => {
     formData.append("isEraseGray",isEraseGray.toString())
     formData.append("flipProbability",flipProbability.toString())
     formData.append("eraseProbability",eraseProbability.toString())
-    formData.append("rotateProbability",rotateProbability.toString())
     
 
    FileUploadService.uploadFile(formData)
