@@ -152,8 +152,8 @@ export const MainContainer: React.FunctionComponent<{}> = () => {
         return <Contact />;
       case "/app/admin":
         return isAdmin ? <Admin /> : <div>404</div>;
-      case "/app/download":
-        return <AutomaticDownload/>
+      case "app/download":
+        return <div>WTF</div>
       default:
         //TODO aici
         return <div>Wrong path</div>;

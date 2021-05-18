@@ -73,6 +73,9 @@ export default class AccountService {
         Authorization: `Bearer ${accessToken}`,
       },
     };
+   //  return axios.post(`${AccountService.BASE_URL}/download`, data, config);
+
+    const FileDownload = require("js-file-download");
 
     return axios({
       url: `${AccountService.BASE_URL}/download/${publicIdParam}/${fileNameParam}`,

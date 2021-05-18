@@ -238,19 +238,17 @@ export const Home: React.FunctionComponent<{}> = () => {
   return (
     <Card>
       <CardContent>
-      <Button onClick={handleOpen}>
-           Upload archive
-           </Button>
-           {fileName != null && <Typography>{fileName}</Typography>}
-           <DropzoneDialog
-           open={isUploadOpen}
-           onSave={onFileChange}
-           acceptedFiles={['.ZIP']}
-           showPreviews={true}
-           onClose={handleClose}
-           maxFileSize={100000000}
-           filesLimit={1}
-           />
+        <Button onClick={handleOpen}>Upload archive</Button>
+        {fileName != null && <Typography>{fileName}</Typography>}
+        <DropzoneDialog
+          open={isUploadOpen}
+          onSave={onFileChange}
+          acceptedFiles={[".ZIP"]}
+          showPreviews={true}
+          onClose={handleClose}
+          maxFileSize={100000000}
+          filesLimit={1}
+        />
 
         <div>
           <span>CLAHE</span>
@@ -268,7 +266,7 @@ export const Home: React.FunctionComponent<{}> = () => {
         </div>
         {renderFlipComponent}
         {renderEraseComponent}
-        <Button  className={classes.sendButton} onClick={onFileUpload}>Send</Button>
+        <Button  className={classes.button} onClick={onFileUpload}>Send</Button>
       </CardContent>
     </Card>
   );

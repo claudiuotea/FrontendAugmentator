@@ -8,7 +8,6 @@ import {
 import React, { useState } from "react";
 import { RegisterInterface } from "../Models/Interfaces";
 import AccountService from "../Services/AccountService";
-import Image from "../Images/logo.png";
 
 //Creez un obiect CSS
 const useStyles = makeStyles((theme) => ({

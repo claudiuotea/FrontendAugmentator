@@ -4,12 +4,14 @@ import {
   makeStyles,
   TextField,
   LinearProgress,
+  InputAdornment,
+  IconButton,
 } from "@material-ui/core";
-import React, { useState } from "react";
-import { RegisterInterface } from "../Models/Interfaces";
+import React, { useEffect, useState } from "react";
+import { LoginInterface } from "../Models/Interfaces";
 import AccountService from "../Services/AccountService";
-import Image from "../Images/logo.png";
-
+import { useHistory } from "react-router";
+import { Visibility, VisibilityOff } from "@material-ui/icons";
 //Creez un obiect CSS
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -36,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
     border: "none",
     outline: "none",
     transition: "border-color .2s",
+    fontSize: 30,
   },
   textField: {
     color: "white !important",
@@ -81,15 +84,20 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-export const Register: React.FunctionComponent<any> = () => {
+
+export const Login: React.FunctionComponent<any> = () => {
   //instantiez obiectul
   const classes = useStyles();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [email, setEmail] = useState("");
+  const [hasError, setHasError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   //pentru loading bar
   const [isFeedbackLoading, setIsFeedbackLoading] = React.useState(false);
+  const history = useHistory();
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
   //verifica daca trebuie afisat loading bar
   const LinearFeedback = () => {
@@ -101,32 +109,46 @@ export const Register: React.FunctionComponent<any> = () => {
       );
     }
   };
-
   const onSubmit = async (event: any) => {
-    if (password === confirmPassword) {
-      const data: RegisterInterface = {
-        username: username,
-        password: password,
-        email: email,
-      };
-      //trimite request la server
-      AccountService.register(data)
-        .then((resp) => {
-          console.log(resp);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      //MESSAGEBOX
-      console.log("NU UITA MESSAGEBOX CA NU II BUNA PAROLA");
-    }
+    //setam ca inca asteptam raspunsul pentru loading bar
+    setIsFeedbackLoading(true);
+
+    const data: LoginInterface = {
+      username: username,
+      password: password,
+    };
+    //trimite request la server
+    AccountService.login(data)
+      .then((resp) => {
+        window.localStorage.setItem("AccessToken", resp.data.AccessToken);
+        window.localStorage.setItem("RefreshToken", resp.data.RefreshToken);
+        history.push("/app");
+      })
+      .catch((err) => {
+        setHasError(true);
+        setErrorMessage(err.response.data);
+        console.log(err);
+      })
+      .finally(() => {
+        //am primit raspunsul
+        setIsFeedbackLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    let token = localStorage.getItem("AccessToken");
+    if (token != "" && token != null && token != undefined)
+      history.push("/app");
+  });
+
+  const Alert = (props: AlertProps) => {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
   };
   return (
     //impart ecranul in 2 coloane
     <div className={classes.root + classes.gridItem}>
       <div className={classes.form}>
-      <img
+        <img
           style={{
             width: "300px",
             height: "auto",
@@ -135,24 +157,9 @@ export const Register: React.FunctionComponent<any> = () => {
           }}
           src={Image}
         />
+        <ViewErrorInfo hasError={hasError} errorMessage={errorMessage} />
         <TextField
-          variant="outlined"
-          margin="normal"
-          fullWidth
-          required
-          label="Email"
-          name="email"
-          value={email}
-          autoFocus
-          type="email"
-          onChange={(e) => {
-            setEmail(e.target.value);
-          }}
-          disabled={isFeedbackLoading}
-          inputProps={{ className: classes.textFieldInputProps }}
           className={classes.textField}
-        />
-        <TextField
           variant="outlined"
           margin="normal"
           fullWidth
@@ -161,57 +168,61 @@ export const Register: React.FunctionComponent<any> = () => {
           name="username"
           value={username}
           autoFocus
+          disabled={isFeedbackLoading}
           onChange={(e) => {
             setUsername(e.target.value);
           }}
-          disabled={isFeedbackLoading}
           inputProps={{ className: classes.textFieldInputProps }}
-          className={classes.textField}
         />
         <TextField
           variant="outlined"
           margin="normal"
           fullWidth
           required
+          disabled={isFeedbackLoading}
           label="Password"
           name="password"
           value={password}
           autoFocus
-          type="password"
+          type={showPassword ? "text" : "password"}
           onChange={(e) => {
             setPassword(e.target.value);
           }}
-          disabled={isFeedbackLoading}
-          inputProps={{ className: classes.textFieldInputProps }}
-          className={classes.textField}
-        />
-        <TextField
-          variant="outlined"
-          margin="normal"
-          fullWidth
-          required
-          label="Confirm password"
-          name="confirmPassword"
-          value={confirmPassword}
-          autoFocus
-          type="password"
-          onChange={(e) => {
-            setConfirmPassword(e.target.value);
+          InputProps={{
+            // <-- This is where the toggle button is added.
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            ),
           }}
-          disabled={isFeedbackLoading}
           inputProps={{ className: classes.textFieldInputProps }}
           className={classes.textField}
         />
+        <div style={{ textAlign: "center", marginTop: 10, marginBottom: 10 }}>
+          <a
+            href="/account/forgotpass"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            Forgot password? Click here!
+          </a>
+        </div>
         {LinearFeedback()}
         <Button
-          className={classes.button}
           fullWidth
           type="submit"
           variant="contained"
           color="primary"
           onClick={onSubmit}
+          className={classes.button}
         >
-          Sign up
+          Sign in
         </Button>
       </div>
     </div>

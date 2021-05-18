@@ -1,4 +1,4 @@
-import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+import { createMuiTheme } from '@material-ui/core';
 import React from 'react';
 import './App.css';
 import { AppRoutes } from './Routes/AppRoutes';

@@ -31,8 +31,6 @@ import AccountService from "../Services/AccountService";
 import { Admin } from "./Admin";
 import { Contact } from "./Contact";
 import { Home } from "./Home";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import Logo from "../Images/logo_side.png";
 import { AutomaticDownload } from "./AutomaticDownload";
 
 const drawerWidth = 240;
@@ -73,34 +71,9 @@ const useStyles = makeStyles((theme: Theme) =>
     drawerPaper: {
       width: drawerWidth,
     },
-    list: {
-      fontWeightRegular: "bolder",
-    },
     content: {
       flexGrow: 1,
       padding: theme.spacing(3),
-    },
-    logoutButton: {
-      border: "1px solid ",
-      background: "none",
-      fontSize: 20,
-      cursor: "pointer",
-      textAlign: "center",
-      padding: "10px 20px",
-      transition: "0.8s",
-      "&:hover": {
-        color: "#fff",
-        background: "#000",
-        borderColor: "#000",
-      },
-      "&:before": {
-        content: "",
-        position: "absolute",
-        left: 0,
-        width: "100%",
-        height: "100%",
-        background: "black",
-      },
     },
   })
 );
@@ -145,16 +118,16 @@ export const MainContainer: React.FunctionComponent<{}> = () => {
   const renderSwitch = (param: string) => {
     switch (param) {
       case "/app":
-        return <Home />;
+        return <Home/>;
       case "/app/stats":
         return <div>stats</div>;
       case "/app/contact":
-        return <Contact />;
+        return <Contact/>;
       case "/app/admin":
         return isAdmin ? <Admin /> : <div>404</div>;
       case "/app/download":
         return <AutomaticDownload/>
-      default:
+        default:
         //TODO aici
         return <div>Wrong path</div>;
     }
@@ -165,16 +138,16 @@ export const MainContainer: React.FunctionComponent<{}> = () => {
     <div>
       <div className={classes.toolbar} />
       <Divider />
-      <List className={classes.list}>
+      <List>
         <ListItem button key="home" onClick={() => history.push("/app")}>
           <ListItemIcon>
-            <HomeIcon style={{ color: "black" }} />
+            <HomeIcon></HomeIcon>
           </ListItemIcon>
           <ListItemText primary="Home" />
         </ListItem>
         <ListItem button key="stats" onClick={() => history.push("/app/stats")}>
           <ListItemIcon>
-            <EqualizerIcon style={{ color: "black" }} />
+            <EqualizerIcon></EqualizerIcon>
           </ListItemIcon>
           <ListItemText primary="Stats" />
         </ListItem>
@@ -184,7 +157,7 @@ export const MainContainer: React.FunctionComponent<{}> = () => {
           onClick={() => history.push("/app/contact")}
         >
           <ListItemIcon>
-            <PermContactCalendarIcon style={{ color: "black" }} />
+            <PermContactCalendarIcon></PermContactCalendarIcon>
           </ListItemIcon>
           <ListItemText primary="Contact" />
         </ListItem>
@@ -197,24 +170,14 @@ export const MainContainer: React.FunctionComponent<{}> = () => {
               onClick={() => history.push("/app/admin")}
             >
               <ListItemIcon>
-                <SupervisorAccountIcon style={{ color: "black" }} />
+                <SupervisorAccountIcon></SupervisorAccountIcon>
               </ListItemIcon>
               <ListItemText primary="Admin" />
             </ListItem>
           ) : null
         }
-        <ListItem
-          button
-          key="stats"
-          onClick={() => {
-            AccountService.logout();
-            window.location.reload(false);
-          }}
-        >
-          <ListItemIcon>
-            <ExitToAppIcon style={{ color: "black" }} />
-          </ListItemIcon>
-          <ListItemText primary="Logout" />
+        <ListItem button key="logout" onClick={() => AccountService.logout()}>
+          <ListItemText>LOGOUT</ListItemText>
         </ListItem>
       </List>
     </div>
@@ -235,7 +198,6 @@ export const MainContainer: React.FunctionComponent<{}> = () => {
       />
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
-        <img src={Logo} style={{ width: "300px", height: "auto" , position:"absolute"}} />
         <Toolbar>
           <IconButton
             color="inherit"
@@ -249,6 +211,7 @@ export const MainContainer: React.FunctionComponent<{}> = () => {
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer}>
+        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
           <Drawer
             variant="temporary"
@@ -259,7 +222,7 @@ export const MainContainer: React.FunctionComponent<{}> = () => {
               paper: classes.drawerPaper,
             }}
             ModalProps={{
-              keepMounted: true
+              keepMounted: true, // Better open performance on mobile.
             }}
           >
             {drawer}

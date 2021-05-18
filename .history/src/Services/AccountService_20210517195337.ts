@@ -64,8 +64,11 @@ export default class AccountService {
     localStorage.removeItem("AccessToken");
   };
 
+  static downloadFromServer(fileName: string) {
+    window.open("http://127.0.0.1:5000/get-file/" + fileName);
+  }
 
-  static downloadFile = (fileNameParam:string,publicIdParam:string): Promise<any> => {
+  static downloadFile = (data: DownloadFileInterface): Promise<any> => {
     let accessToken = window.localStorage.getItem("AccessToken");
 
     let config = {
@@ -73,10 +76,13 @@ export default class AccountService {
         Authorization: `Bearer ${accessToken}`,
       },
     };
+   //  return axios.post(`${AccountService.BASE_URL}/download`, data, config);
+
+    const FileDownload = require("js-file-download");
 
     return axios({
-      url: `${AccountService.BASE_URL}/download/${publicIdParam}/${fileNameParam}`,
-      method: "GET",
+      url: `${AccountService.BASE_URL}/download`,
+      method: "POST",
       responseType: "blob",
       headers: {"Authorization" : `Bearer ${accessToken}`}
     })

@@ -8,7 +8,6 @@ import {
 import React, { useState } from "react";
 import { RegisterInterface } from "../Models/Interfaces";
 import AccountService from "../Services/AccountService";
-import Image from "../Images/logo.png";
 
 //Creez un obiect CSS
 const useStyles = makeStyles((theme) => ({
@@ -126,15 +125,6 @@ export const Register: React.FunctionComponent<any> = () => {
     //impart ecranul in 2 coloane
     <div className={classes.root + classes.gridItem}>
       <div className={classes.form}>
-      <img
-          style={{
-            width: "300px",
-            height: "auto",
-            display: "block",
-            margin: "auto",
-          }}
-          src={Image}
-        />
         <TextField
           variant="outlined"
           margin="normal"

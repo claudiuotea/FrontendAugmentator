@@ -33,7 +33,6 @@ import { Contact } from "./Contact";
 import { Home } from "./Home";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Logo from "../Images/logo_side.png";
-import { AutomaticDownload } from "./AutomaticDownload";
 
 const drawerWidth = 240;
 
@@ -152,7 +151,7 @@ export const MainContainer: React.FunctionComponent<{}> = () => {
         return <Contact />;
       case "/app/admin":
         return isAdmin ? <Admin /> : <div>404</div>;
-      case "/app/download":
+      case "app/download":
         return <AutomaticDownload/>
       default:
         //TODO aici

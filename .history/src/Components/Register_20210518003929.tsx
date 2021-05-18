@@ -1,14 +1,7 @@
-import {
-  Button,
-  Grid,
-  makeStyles,
-  TextField,
-  LinearProgress,
-} from "@material-ui/core";
+import { Button, Grid, makeStyles, TextField, LinearProgress } from "@material-ui/core";
 import React, { useState } from "react";
 import { RegisterInterface } from "../Models/Interfaces";
 import AccountService from "../Services/AccountService";
-import Image from "../Images/logo.png";
 
 //Creez un obiect CSS
 const useStyles = makeStyles((theme) => ({
@@ -21,13 +14,13 @@ const useStyles = makeStyles((theme) => ({
   },
   //adauga niste spatiu si centreaza-le
   form: {
-    margin: theme.spacing(4),
-    verticalAlign: "middle",
-    marginTop: "15%",
+     margin: theme.spacing(4),
+     verticalAlign:"middle",
+     marginTop:"15%"
   },
   linearProgress: {
-    marginTop: 15,
-    marginBottom: 15,
+    marginTop:15,
+    marginBottom:15
   },
   textFieldInputProps: {
     color: "black !important",
@@ -36,12 +29,14 @@ const useStyles = makeStyles((theme) => ({
     border: "none",
     outline: "none",
     transition: "border-color .2s",
+
+   
   },
   textField: {
     color: "white !important",
     textTransform: "uppercase",
     background: "none",
-
+    
     "& .MuiFormLabel-root": {
       color: "#666",
     },
@@ -54,32 +49,38 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
       borderBottomColor: "white",
     },
-    "& .MuiOutlinedInput-notchedOutline": {
-      border: "1px solid black",
+    "& .MuiOutlinedInput-notchedOutline":{
+      border: "1px solid black"
     },
     "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
       border: "2px solid black",
       background: "none",
     },
+    
+ 
+    
 
     fontFamily: "Montserrat",
   },
 
-  button: {
-    border: "1px solid ",
-    background: "none",
+  button:{
+    border: '1px solid ',
+    background: 'none',
     fontSize: 20,
-    cursor: "pointer",
-    padding: "10px 20px",
-    transition: "0.8s",
-    color: "#000",
-    borderColor: "#000",
-    "&:hover": {
-      color: "#fff",
-      background: "#000",
-      borderColor: "#000",
+    cursor: 'pointer',
+    padding: '10px 20px',
+    transition: '0.8s',
+    color: '#000',
+    borderColor: '#000',
+    '&:hover': {
+      color: '#fff',
+      background: '#000',
+      borderColor: '#000'
     },
-  },
+    
+
+  }
+  
 }));
 export const Register: React.FunctionComponent<any> = () => {
   //instantiez obiectul
@@ -89,18 +90,18 @@ export const Register: React.FunctionComponent<any> = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
   //pentru loading bar
-  const [isFeedbackLoading, setIsFeedbackLoading] = React.useState(false);
+ const [isFeedbackLoading, setIsFeedbackLoading] = React.useState(false);
 
-  //verifica daca trebuie afisat loading bar
-  const LinearFeedback = () => {
-    if (isFeedbackLoading) {
+ //verifica daca trebuie afisat loading bar
+ const LinearFeedback = () => {
+  if (isFeedbackLoading) {
       return (
-        <div className={classes.linearProgress}>
-          <LinearProgress />
-        </div>
+          <div className={classes.linearProgress}>
+              <LinearProgress/>
+          </div>
       );
-    }
-  };
+  }
+}
 
   const onSubmit = async (event: any) => {
     if (password === confirmPassword) {
@@ -126,15 +127,6 @@ export const Register: React.FunctionComponent<any> = () => {
     //impart ecranul in 2 coloane
     <div className={classes.root + classes.gridItem}>
       <div className={classes.form}>
-      <img
-          style={{
-            width: "300px",
-            height: "auto",
-            display: "block",
-            margin: "auto",
-          }}
-          src={Image}
-        />
         <TextField
           variant="outlined"
           margin="normal"
@@ -149,8 +141,8 @@ export const Register: React.FunctionComponent<any> = () => {
             setEmail(e.target.value);
           }}
           disabled={isFeedbackLoading}
-          inputProps={{ className: classes.textFieldInputProps }}
-          className={classes.textField}
+          inputProps = {{ className: classes.textFieldInputProps}}
+          className = {classes.textField}
         />
         <TextField
           variant="outlined"
@@ -165,8 +157,8 @@ export const Register: React.FunctionComponent<any> = () => {
             setUsername(e.target.value);
           }}
           disabled={isFeedbackLoading}
-          inputProps={{ className: classes.textFieldInputProps }}
-          className={classes.textField}
+          inputProps = {{ className: classes.textFieldInputProps}}
+          className = {classes.textField}
         />
         <TextField
           variant="outlined"
@@ -182,8 +174,8 @@ export const Register: React.FunctionComponent<any> = () => {
             setPassword(e.target.value);
           }}
           disabled={isFeedbackLoading}
-          inputProps={{ className: classes.textFieldInputProps }}
-          className={classes.textField}
+          inputProps = {{ className: classes.textFieldInputProps}}
+          className = {classes.textField}
         />
         <TextField
           variant="outlined"
@@ -199,12 +191,12 @@ export const Register: React.FunctionComponent<any> = () => {
             setConfirmPassword(e.target.value);
           }}
           disabled={isFeedbackLoading}
-          inputProps={{ className: classes.textFieldInputProps }}
-          className={classes.textField}
+          inputProps = {{ className: classes.textFieldInputProps}}
+          className = {classes.textField}
         />
         {LinearFeedback()}
         <Button
-          className={classes.button}
+          className = {classes.button}
           fullWidth
           type="submit"
           variant="contained"
