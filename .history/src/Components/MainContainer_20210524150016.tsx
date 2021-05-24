@@ -41,10 +41,10 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      display: "flex",
-      //display: "inline-block",
-      //overflow: "hidden",
-      //position:"relative",
+      //display: "flex",
+      display: "inline-block",
+      overflow: "hidden",
+      position:"relative",
       width: "100vw"
     },
     drawer: {
@@ -226,14 +226,17 @@ export const MainContainer: React.FunctionComponent<{}> = () => {
       <img
         src={Image}
         style={{
-          opacity: 0.4,
+          //opacity: 0.4,
+          //position: "absolute",
           //left: 0,
           //top: 0,
+          //width: "100vw",
+          //height: "100vh",
           pointerEvents:"none",
           position:"absolute",
           width:"100vw",
           height:"100vh",
-          zIndex:-1
+          zIndex:"-1"
         }}
       />
       <CssBaseline />

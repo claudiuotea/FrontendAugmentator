@@ -227,8 +227,11 @@ export const MainContainer: React.FunctionComponent<{}> = () => {
         src={Image}
         style={{
           opacity: 0.4,
+          //position: "absolute",
           //left: 0,
           //top: 0,
+          //width: "100vw",
+          //height: "100vh",
           pointerEvents:"none",
           position:"absolute",
           width:"100vw",

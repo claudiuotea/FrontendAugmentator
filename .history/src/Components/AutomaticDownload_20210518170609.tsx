@@ -19,7 +19,7 @@ export const AutomaticDownload: React.FunctionComponent<any> = () => {
          const fileNameParam = Array.isArray(fileName)?fileName[0]:fileName!
          const publicIdParam = Array.isArray(publicId)?publicId[0]:publicId!
 
-      //trimite request ca sa descarce fisierul
+      //trimite request ca sa vad daca e admin
     AccountService.downloadFile(fileNameParam,publicIdParam)
     .then((resp) => {
       

@@ -42,10 +42,10 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
-      //display: "inline-block",
-      //overflow: "hidden",
-      //position:"relative",
-      width: "100vw"
+      // "& backgroundImage":{
+      //    opacity:0.4,
+      //  height:"100vh"
+      // }
     },
     drawer: {
       [theme.breakpoints.up("sm")]: {
@@ -227,13 +227,11 @@ export const MainContainer: React.FunctionComponent<{}> = () => {
         src={Image}
         style={{
           opacity: 0.4,
-          //left: 0,
-          //top: 0,
-          pointerEvents:"none",
-          position:"absolute",
-          width:"100vw",
-          height:"100vh",
-          zIndex:-1
+          position: "absolute",
+          left: 0,
+          top: 0,
+          width: "100vw",
+          height: "100vh",
         }}
       />
       <CssBaseline />
