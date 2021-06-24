@@ -301,7 +301,7 @@ export const Home: React.FunctionComponent<{}> = () => {
 
   return (
     <Card className={classes.root}>
-      <Typography>Please select a .zip file. After the augmentation is done an automatic download will be triggered. If your download does not start please go to the stats page where you will find a download button.</Typography>
+      <Typography>Please select a .zip file. After the augmentation is done an automatic download will be triggered. If your download does not start please go to the stats page where you fill find a download button.</Typography>
       <CardContent>
         <Button onClick={handleOpen} className={classes.sendButton}>
           Upload archive

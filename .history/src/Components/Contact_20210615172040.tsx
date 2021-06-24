@@ -108,18 +108,17 @@ export const Contact: React.FunctionComponent<any> = () => {
     }
     const re =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!re.test(String(mail).toLowerCase())) {
+    if (!re.test(String(email).toLowerCase())) {
       setHasError(true);
       setErrorMessage("Please enter a valid email!");
       return;
     }
     UserService.sendMail(email)
       .then((resp) => {
-        setHasError(false)
+        console.log("bravo boss");
       })
       .catch((err) => {
-        setHasError(true)
-        setErrorMessage(err.response.data.message)
+        console.log("Naspa fra");
       });
   };
 
@@ -215,9 +214,9 @@ export const Contact: React.FunctionComponent<any> = () => {
                 </div>
               </div>
             </div>
-      <ViewErrorInfo hasError={hasError} errorMessage={errorMessage}/>
           </div>
         </div>
+      <ViewErrorInfo hasError={hasError} errorMessage={errorMessage}/>
       </div>
     </ThemeProvider>
   );
